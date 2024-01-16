@@ -1,4 +1,4 @@
 # created by virtualenv automatically
 venv/bin
-.idea
+.idea/
 /venv
