@@ -1,1 +1,0 @@
-x = lambda a: a
