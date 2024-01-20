@@ -1,9 +1,4 @@
-from math import sqrt
-
 my_list = [i for i in range(1, 100)]
+new_list = list(filter(lambda x: all(x % i != 0 for i in range(2, int(x**0.5) + 1)) if x > 1 else False, my_list))
 
-for i in range(1, len(my_list) + 1, 2):
-    new_list = list(filter(lambda x: x % i or x == i, my_list))
-
-for i in new_list:
-    print(i)
+print(new_list)
