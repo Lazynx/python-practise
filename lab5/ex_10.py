@@ -1,5 +1,8 @@
 import re
 
 
-string = input("Input your string: ")
-print(re.sub("([A-Z])", lambda x: "_" + x.group(1).lower(), string))
+with open("row.txt", "r", encoding="UTF-8") as file:
+    lines = file.readlines()
+    for i_line in lines:
+        stripped_line = i_line.strip()
+        print(re.sub("([A-ZА-Я])", lambda x: ("_" if x.start() != 0 else "") + x.group(1).lower(), stripped_line))
