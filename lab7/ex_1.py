@@ -7,8 +7,8 @@ screen = pygame.display.set_mode((830, 830))
 clock = pygame.time.Clock()
 
 mickey = pygame.image.load('images/mickey.png')
-left_hand = pygame.image.load('images/left.png')
-right_hand = pygame.image.load('images/right.png')
+right_hand = pygame.image.load('images/left.png')
+left_hand = pygame.image.load('images/right.png')
 
 mickey_rect = mickey.get_rect(center=(415, 415))
 left_hand_rect = left_hand.get_rect(center=mickey_rect.center)
@@ -24,7 +24,7 @@ while not done:
     current_time = datetime.now().time()
 
     seconds_angle = current_time.second * 6
-    minutes_angle = (current_time.minute * 60 + current_time.second) / 3600.0 * 360
+    minutes_angle = (current_time.minute * 60 + current_time.second) / 50
 
     rotated_left_hand = pygame.transform.rotate(left_hand, -seconds_angle)
     rotated_right_hand = pygame.transform.rotate(right_hand, -minutes_angle)

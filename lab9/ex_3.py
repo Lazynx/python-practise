@@ -19,9 +19,11 @@ def draw_menu(color):
     pygame.draw.line(screen, 'black', (0, 70), (WIDTH, 70), 3)
     circle_brush = [pygame.draw.rect(screen, 'black', [10, 10, 50, 50]), 0]
     pygame.draw.circle(screen, 'white', (35, 35), 20)
-    pygame.draw.circle(screen, 'black', (35, 35), 18)
     rect_brush = [pygame.draw.rect(screen, 'black', [70, 10, 50, 50]), 1]
-    pygame.draw.rect(screen, 'white', [75, 15, 40, 40], 2)
+    pygame.draw.rect(screen, 'white', [75, 15, 40, 40])
+    triangle_brush = [pygame.draw.rect(screen, 'black', [130, 10, 50, 50]), 2]
+    pygame.draw.polygon(screen, (255, 255, 255), ((25, 75), (320, 125), (250, 375)))
+
     brush_list = [circle_brush, rect_brush]
 
     pygame.draw.circle(screen, color, (400, 35), 30)
@@ -50,10 +52,10 @@ def draw_menu(color):
 def draw_painting(paints):
     for i_paint in paints:
         if i_paint[2] == 0:
-            pygame.draw.circle(screen, i_paint[0], i_paint[1], 15, 2)
+            pygame.draw.circle(screen, i_paint[0], i_paint[1], 15)
         elif i_paint[2] == 1:
             # pygame.draw.circle(screen, paints[i][0], paints[i][1], paints[i][2])
-            pygame.draw.rect(screen,  i_paint[0], [i_paint[1][0]-15, i_paint[1][1]-15, 30, 30], 2)
+            pygame.draw.rect(screen,  i_paint[0], [i_paint[1][0]-15, i_paint[1][1]-15, 30, 30])
 
 
 run = True
@@ -70,9 +72,9 @@ while run:
     draw_painting(painting)
     if mouse[1] > 85:
         if active_figure == 0:
-            pygame.draw.circle(screen, active_color, mouse, 15, 2)
+            pygame.draw.circle(screen, active_color, mouse, 15)
         elif active_figure == 1:
-            pygame.draw.rect(screen, active_color, [mouse[0] - 15, mouse[1] - 15, 30, 30], 2)
+            pygame.draw.rect(screen, active_color, [mouse[0] - 15, mouse[1] - 15, 30, 30])
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

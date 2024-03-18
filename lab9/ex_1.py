@@ -26,6 +26,7 @@ SCREEN_HEIGHT = 600
 SPEED = 5
 SCORE = 0
 COIN_SCORE = 0
+TOTAL_SCORE = 0
 
 # Setting up Fonts
 font = pygame.font.SysFont("Verdana", 60)
@@ -130,17 +131,26 @@ while True:
     DISPLAYSURF.blit(background, (0, 0))
     scores = font_small.render(str(SCORE), True, BLACK)
     coin_scores = font_small.render(str(COIN_SCORE), True, BLACK)
+    total_scores = font_small.render(str(TOTAL_SCORE), True, BLACK)
     DISPLAYSURF.blit(scores, (10, 10))
-    DISPLAYSURF.blit(coin_scores, (375, 10))
+    DISPLAYSURF.blit(coin_scores, (360, 10))
+    DISPLAYSURF.blit(total_scores, (360, 30))
 
     # Moves and Re-draws all Sprites
     for entity in all_sprites:
         DISPLAYSURF.blit(entity.image, entity.rect)
         entity.move()
 
+    total_score = random.randint(0, 10)
+
     # Check for coin collection
     if P1.collect_coin(coins):
+        # if player reach 100 points then speed of the game increase on 1.0
+        if TOTAL_SCORE == 100:
+            SPEED += 1.0
         COIN_SCORE += 1
+        # Total score increase on random points
+        TOTAL_SCORE += total_score
         new_coin = Coin()
         coins.add(new_coin)
         all_sprites.add(new_coin)
