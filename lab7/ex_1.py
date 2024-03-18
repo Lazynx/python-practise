@@ -7,8 +7,8 @@ screen = pygame.display.set_mode((830, 830))
 clock = pygame.time.Clock()
 
 mickey = pygame.image.load('images/mickey.png')
-right_hand = pygame.image.load('images/left.png')
-left_hand = pygame.image.load('images/right.png')
+right_hand = pygame.image.load('images/right.png')
+left_hand = pygame.image.load('images/left.png')
 
 mickey_rect = mickey.get_rect(center=(415, 415))
 left_hand_rect = left_hand.get_rect(center=mickey_rect.center)
