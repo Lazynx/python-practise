@@ -19,12 +19,16 @@ def draw_menu(color):
     pygame.draw.line(screen, 'black', (0, 70), (WIDTH, 70), 3)
     circle_brush = [pygame.draw.rect(screen, 'black', [10, 10, 50, 50]), 0]
     pygame.draw.circle(screen, 'white', (35, 35), 20)
+    pygame.draw.circle(screen, 'black', (35, 35), 18)
     rect_brush = [pygame.draw.rect(screen, 'black', [70, 10, 50, 50]), 1]
-    pygame.draw.rect(screen, 'white', [75, 15, 40, 40])
-    triangle_brush = [pygame.draw.rect(screen, 'black', [130, 10, 50, 50]), 2]
-    pygame.draw.polygon(screen, (255, 255, 255), ((25, 75), (320, 125), (250, 375)))
-
-    brush_list = [circle_brush, rect_brush]
+    pygame.draw.rect(screen, 'white', [76.5, 26, 37, 20], 2)
+    square_brush = [pygame.draw.rect(screen, 'black', [130, 10, 50, 50]), 2]
+    pygame.draw.rect(screen, 'white', [135, 15, 40, 40], 2)
+    right_triangle_brush = [pygame.draw.rect(screen, 'black', [190, 10, 50, 50]), 3]
+    pygame.draw.polygon(screen, 'white', [(195, 15), (195, 55), (235, 15)], 2)
+    equilateral_triangle_brush = [pygame.draw.rect(screen, 'black', [250, 10, 50, 50]), 2]
+    rhombus_brush = [pygame.draw.rect(screen, 'black', [310, 10, 50, 50]), 2]
+    brush_list = [circle_brush, rect_brush, square_brush, right_triangle_brush]
 
     pygame.draw.circle(screen, color, (400, 35), 30)
     pygame.draw.circle(screen, 'dark gray', (400, 35), 30, 3)
@@ -52,10 +56,15 @@ def draw_menu(color):
 def draw_painting(paints):
     for i_paint in paints:
         if i_paint[2] == 0:
-            pygame.draw.circle(screen, i_paint[0], i_paint[1], 15)
+            pygame.draw.circle(screen, i_paint[0], i_paint[1], 20, 2)
         elif i_paint[2] == 1:
-            # pygame.draw.circle(screen, paints[i][0], paints[i][1], paints[i][2])
-            pygame.draw.rect(screen,  i_paint[0], [i_paint[1][0]-15, i_paint[1][1]-15, 30, 30])
+            pygame.draw.rect(screen, i_paint[0], [i_paint[1][0] - 15, i_paint[1][1] - 15, 37, 20], 2)
+        elif i_paint[2] == 2:
+            pygame.draw.rect(screen, i_paint[0], [i_paint[1][0] - 15, i_paint[1][1] - 15, 35, 35], 2)
+        elif i_paint[2] == 3:
+            pygame.draw.polygon(screen, active_color, [(i_paint[1][0] - 15, i_paint[1][1] - 15),
+                                                       (i_paint[1][0] - 15, i_paint[1][1] + 35),
+                                                       (i_paint[1][0] + 35, i_paint[1][1] - 15)], 2)
 
 
 run = True
@@ -72,9 +81,15 @@ while run:
     draw_painting(painting)
     if mouse[1] > 85:
         if active_figure == 0:
-            pygame.draw.circle(screen, active_color, mouse, 15)
+            pygame.draw.circle(screen, active_color, mouse, 20, 2)
         elif active_figure == 1:
-            pygame.draw.rect(screen, active_color, [mouse[0] - 15, mouse[1] - 15, 30, 30])
+            pygame.draw.rect(screen, active_color, [mouse[0] - 15, mouse[1] - 15, 37, 20], 2)
+        elif active_figure == 2:
+            pygame.draw.rect(screen, active_color, [mouse[0] - 15, mouse[1] - 15, 35, 35], 2)
+        elif active_figure == 3:
+            pygame.draw.polygon(screen, active_color, [(mouse[0] - 15, mouse[1] - 15),
+                                                       (mouse[0] - 15, mouse[1] + 35),
+                                                       (mouse[0] + 35, mouse[1] - 15)], 2)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
