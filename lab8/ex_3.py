@@ -49,11 +49,14 @@ def draw_menu(color):
 
 
 def draw_painting(paints):
-    for i_paint in paints:
-        if i_paint[2] == 0:
-            pygame.draw.circle(screen, i_paint[0], i_paint[1], 20, 2)
-        elif i_paint[2] == 1:
-            pygame.draw.rect(screen, i_paint[0], [i_paint[1][0] - 15, i_paint[1][1] - 15, 37, 20], 2)
+    for color, pos, figure in paints:
+        if color == (255, 255, 255):
+            pygame.draw.rect(screen, color, [pos[0] - 15, pos[1] - 15, 37, 20])
+        else:
+            if figure == 0:
+                pygame.draw.circle(screen, color, pos, 20, 2)
+            elif figure == 1:
+                pygame.draw.rect(screen, color, [pos[0] - 15, pos[1] - 15, 37, 20], 2)
 
 
 run = True
@@ -68,11 +71,15 @@ while run:
     if left_click and mouse[1] > 85:
         painting.append((active_color, mouse, active_figure))
     draw_painting(painting)
+
     if mouse[1] > 85:
-        if active_figure == 0:
-            pygame.draw.circle(screen, active_color, mouse, 20, 2)
-        elif active_figure == 1:
-            pygame.draw.rect(screen, active_color, [mouse[0] - 15, mouse[1] - 15, 37, 20], 2)
+        if active_color == (255, 255, 255):
+            pygame.draw.rect(screen, active_color, [mouse[0] - 15, mouse[1] - 15, 37, 20])
+        else:
+            if active_figure == 0:
+                pygame.draw.circle(screen, active_color, mouse, 20, 2)
+            elif active_figure == 1:
+                pygame.draw.rect(screen, active_color, [mouse[0] - 15, mouse[1] - 15, 37, 20], 2)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
