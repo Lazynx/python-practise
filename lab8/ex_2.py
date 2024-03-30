@@ -60,6 +60,7 @@ def detect_collision(dx, dy, ball, rect):
         dx = -dx
     return dx, dy
 
+
 # block settings
 block_list = [pygame.Rect(10 + 120 * i, 50 + 70 * j,
                           100, 50) for i in range(10) for j in range(4)]
@@ -75,6 +76,17 @@ for _ in range(5):  # Number of unbreakable blocks
 
 unbreakable_color_list = [(0, 0, 255) for _ in range(len(unbreakable_block_list))]
 
+bonus_brick_types = {
+    "longer_paddle": {"color": (0, 255, 0), "perk": "paddle", "message": "Longer paddle!"},
+    "increase_speed": {"color": (255, 165, 0), "perk": "speed", "message": "Speed Up!"},
+}
+
+bonus_brick_list = []
+for _ in range(5):  # Number of bonus bricks
+    random_index = random.randint(0, len(block_list) - 1)
+    bonus_brick_type = random.choice(list(bonus_brick_types.keys()))
+    bonus_brick_list.append((block_list.pop(random_index), bonus_brick_type))
+
 # Game over Screen
 losefont = pygame.font.SysFont('comicsansms', 40)
 losetext = losefont.render('Game Over', True, (255, 255, 255))
@@ -87,6 +99,11 @@ wintext = losefont.render('You win yay', True, (0, 0, 0))
 wintextRect = wintext.get_rect()
 wintextRect.center = (W // 2, H // 2)
 
+# Message variables
+message_font = pygame.font.SysFont('comicsansms', 40)
+last_message = ""  # Stores the last message
+last_message_rect = None  # Stores the last message's rect
+
 while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -96,6 +113,8 @@ while not done:
 
     [pygame.draw.rect(screen, color_list[color], block) for color, block in enumerate(block_list)]  # drawing blocks
     [pygame.draw.rect(screen, (0, 0, 255), block) for block in unbreakable_block_list]  # drawing unbreakable blocks
+    # Drawing bonus bricks
+
     pygame.draw.rect(screen, pygame.Color(255, 255, 255), paddle)
     pygame.draw.circle(screen, pygame.Color(255, 0, 0), ball.center, ballRadius)
 
@@ -122,6 +141,34 @@ while not done:
     for i, unbreakable_block in enumerate(unbreakable_block_list):
         if ball.colliderect(unbreakable_block):
             dx, dy = detect_collision(dx, dy, ball, unbreakable_block)
+
+    for block, bonus_type in bonus_brick_list:
+        pygame.draw.rect(screen, bonus_brick_types[bonus_type]["color"], block)
+
+    # Collision detection for bonus bricks
+    for i, (bonus_brick, bonus_type) in enumerate(bonus_brick_list):
+        if ball.colliderect(bonus_brick):
+            # Apply perk of the bonus brick
+            if bonus_brick_types[bonus_type]["perk"] == "life":
+                # Implement logic to add extra life
+                pass
+            elif bonus_brick_types[bonus_type]["perk"] == "speed":
+                # Implement logic to increase ball speed
+                ballSpeed += 2  # Example increase in speed
+
+            # Update last message
+            last_message = bonus_brick_types[bonus_type]["message"]
+            last_message_surface = message_font.render(last_message, True, (255, 255, 255))
+            last_message_rect = last_message_surface.get_rect(
+                topright=(W - 10, -5))  # Adjust position to top-right corner
+
+            # Remove the bonus brick from the list
+            del bonus_brick_list[i]
+            break
+
+        # Display last message
+    if last_message:
+        screen.blit(last_message_surface, last_message_rect)
 
     game_score_text = game_score_fonts.render(f'Your game score is: {game_score}', True, (255, 255, 255))
     screen.blit(game_score_text, game_score_rect)
